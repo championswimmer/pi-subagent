@@ -4,9 +4,28 @@ import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import test from "node:test";
-import { discoverSubagentExtensions, selectSubagentExtensions } from "../src/orch/extensions.ts";
+import {
+  discoverSubagentExtensions,
+  extensionDisplayName,
+  selectSubagentExtensions,
+} from "../src/orch/extensions.ts";
 
 const managerEntry = fileURLToPath(new URL("../src/index.ts", import.meta.url));
+
+test("extension labels prefer npm package names and retain local filename fallbacks", () => {
+  for (const [file, expected] of [
+    ["/Users/arnav/.pi/agent/npm/node_modules/pi-context-usage/src/index.ts", "pi-context-usage"],
+    ["/npm/node_modules/pi-context-usage/extension.ts", "pi-context-usage"],
+    ["/npm/node_modules/@scope/pi-tools/src/index.js", "@scope/pi-tools"],
+    ["/npm/node_modules/outer/node_modules/inner/dist/index.mjs", "inner"],
+    ["/npm/node_modules/.pnpm/pkg@1.0.0/node_modules/pkg/src/index.ts", "pkg"],
+    ["/extensions/local/index.ts", "local"],
+    ["/extensions/local/index.cjs", "local"],
+    ["/extensions/custom.ts", "custom.ts"],
+  ]) {
+    assert.equal(extensionDisplayName(path.normalize(file)), expected);
+  }
+});
 
 test("configured extension discovery respects trust, exclusions, packages and manager identity", async (t) => {
   const root = await mkdtemp(path.join(os.tmpdir(), "pi-subagent-extensions-"));

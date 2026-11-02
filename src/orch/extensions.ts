@@ -5,6 +5,18 @@ import { DefaultPackageManager, SettingsManager } from "@earendil-works/pi-codin
 
 const MANAGER_ENTRY = fileURLToPath(new URL("../index.ts", import.meta.url));
 
+/** Installed extensions use their npm package name, not a generic entry-point filename. */
+export function extensionDisplayName(file: string): string {
+  const packagePath = file.split(`${path.sep}node_modules${path.sep}`).slice(1).at(-1);
+  if (packagePath) {
+    const [name, scopedName] = packagePath.split(path.sep);
+    return name.startsWith("@") ? `${name}/${scopedName}` : name;
+  }
+  return /^index\.[cm]?[jt]s$/.test(path.basename(file))
+    ? path.basename(path.dirname(file))
+    : path.basename(file);
+}
+
 async function canonical(file: string): Promise<string> {
   return realpath(file).catch(() => path.resolve(file));
 }
