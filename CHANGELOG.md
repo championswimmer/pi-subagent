@@ -24,6 +24,17 @@ Generated from version tags and merged GitHub pull requests. Do not edit this fi
 
 **Full Changelog**: https://github.com/championswimmer/pi-subagent-manager/compare/v1.3.1...v1.4.0
 
+#### [v1.4.1](https://github.com/championswimmer/pi-subagent-manager/releases/tag/v1.4.1) — Patch release (2026-11-02)
+
+<!-- Release notes generated using configuration in .github/release.yml at v1.4.1 -->
+
+##### What's Changed
+###### Merged pull requests
+* fix: show npm package names in subagent extension picker by @championswimmer in https://github.com/championswimmer/pi-subagent-manager/pull/84
+
+
+**Full Changelog**: https://github.com/championswimmer/pi-subagent-manager/compare/v1.4.0...v1.4.1
+
 ### [v1.3.0](https://github.com/championswimmer/pi-subagent-manager/releases/tag/v1.3.0) — Minor release (2026-10-30)
 
 <!-- Release notes generated using configuration in .github/release.yml at v1.3.0 -->
