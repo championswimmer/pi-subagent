@@ -84,7 +84,7 @@ export const DEFAULT_MANAGER_SETTINGS: ManagerSettings = {
   maxThreads: 64,
   modelSelection: "pick-first-scoped",
   subagentMode: "opportunistic",
-  toolFiltering: "allowed",
+  toolFiltering: "all-except-blocked",
   widgetMode: "full",
   costDisplay: "pi-footer-status",
   costValue: "subagents",

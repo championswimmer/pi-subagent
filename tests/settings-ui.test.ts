@@ -492,7 +492,7 @@ test("restore defaults deletes the chosen scope's file and resets the draft", as
   assert.equal(result.applied, 1);
   assert.equal(result.value(2, "modelSelection"), "Pick First (scoped)");
   assert.equal(result.value(2, "subagentMode"), "Opportunistic");
-  assert.equal(result.value(2, "toolFiltering"), "Allowed (except blocked)");
+  assert.equal(result.value(2, "toolFiltering"), "All except blocked");
   assert.deepEqual(result.loaded.settings, DEFAULT_MANAGER_SETTINGS);
   assert.equal(existsSync(result.userFile), false, "file is deleted, not rewritten");
   assert.match(
@@ -1000,7 +1000,7 @@ test("Tool Filtering saves every mode", async (t) => {
     const result = await run(t, ["toolFiltering", mode, "save"]);
     const field = result.menus[0]!.rows.find((row) => row.id === "toolFiltering")!;
     assert.equal(field.label, "Tool Filtering");
-    assert.equal(field.value, "Allowed (except blocked)");
+    assert.equal(field.value, "All except blocked");
     const chooser = result.menus[1]!;
     assert.equal(chooser.title, "Tool Filtering");
     assert.deepEqual(
@@ -1032,26 +1032,26 @@ test("Tool Filtering selection and chooser cancellation remain draft-only", asyn
   assert.deepEqual(canceled.loaded.settings, DEFAULT_MANAGER_SETTINGS);
 
   const escaped = await run(t, ["toolFiltering", undefined, "save"]);
-  assert.equal(escaped.value(2, "toolFiltering"), "Allowed (except blocked)");
+  assert.equal(escaped.value(2, "toolFiltering"), "All except blocked");
   assert.doesNotMatch(escaped.menus[2]!.title, /unsaved/);
-  assert.equal(escaped.loaded.settings.toolFiltering, "allowed");
+  assert.equal(escaped.loaded.settings.toolFiltering, "all-except-blocked");
 });
 
 test("Tool Filtering saves to a trusted project and restores defaults without saving on cancel", async (t) => {
-  const saved = await run(t, ["scope", "confirm", "toolFiltering", "all-except-blocked", "save"], {
+  const saved = await run(t, ["scope", "confirm", "toolFiltering", "allowed", "save"], {
     trusted: true,
   });
   assert.equal(saved.applied, 1);
-  assert.equal(saved.loaded.settings.toolFiltering, "all-except-blocked");
+  assert.equal(saved.loaded.settings.toolFiltering, "allowed");
   assert.equal(
     JSON.parse(readFileSync(saved.projectFile, "utf8")).toolFiltering,
-    "all-except-blocked",
+    "allowed",
   );
   assert.equal(existsSync(saved.userFile), false);
 
   const restored = await run(t, ["toolFiltering", "all", "defaults", "user", "cancel"]);
   assert.equal(restored.value(2, "toolFiltering"), "All");
-  assert.equal(restored.value(4, "toolFiltering"), "Allowed (except blocked)");
+  assert.equal(restored.value(4, "toolFiltering"), "All except blocked");
   assert.doesNotMatch(restored.menus[4]!.title, /unsaved/);
   assert.equal(restored.applied, 1);
   assert.equal(existsSync(restored.userFile), false);

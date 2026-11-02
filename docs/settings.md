@@ -26,7 +26,7 @@ All keys are optional. Defaults:
   "housekeepingEnabled": false,
   "housekeepingModel": "",
   "modelSelection": "pick-first-scoped",
-  "toolFiltering": "allowed",
+  "toolFiltering": "all-except-blocked",
   "maxLevels": 3,
   "maxConcurrent": 16,
   "maxThreads": 64
@@ -199,11 +199,11 @@ Which model an agent gets when its session starts.
 
 How the type's `tools.allow` / `tools.block` lists are applied.
 
-| Option                                             | What it does                                                         | Use when                                   |
-| -------------------------------------------------- | -------------------------------------------------------------------- | ------------------------------------------ |
-| `allowed` — **Allowed (except blocked)** (default) | Only `allow` tools, minus `block`. Empty/missing `allow` = no tools. | Least privilege. Recommended.              |
-| `all-except-blocked` — **All except blocked**      | Ignores `allow`; everything except `block`.                          | Your definitions only list what to forbid. |
-| `all` — **All**                                    | Ignores both lists.                                                  | Trusted local experiments.                 |
+| Option                                               | What it does                                                     | Use when                                  |
+| ---------------------------------------------------- | ---------------------------------------------------------------- | ----------------------------------------- |
+| `allowed` — **Allowed (except blocked)**               | Only `allow` tools, minus `block`. Empty/missing `allow` = no tools. | Least privilege. Recommended.             |
+| `all-except-blocked` — **All except blocked** (default) | Ignores `allow`; everything except `block`.                        | Your definitions only list what to forbid. |
+| `all` — **All**                                      | Ignores both lists.                                               | Trusted local experiments.                |
 
 - "All" includes child-local built-in and manager tools plus the main session's registered non-hidden tools. Exact-name allow/block lists apply to this inventory.
 - Inherited tools retain exposure and active status. Deferred/codemode tools are discoverable through child-local codemode when permitted; direct tools remain model-facing when active.
@@ -211,7 +211,7 @@ How the type's `tools.allow` / `tools.block` lists are applied.
 - Other custom **model-only** tools fail closed: the SDK cannot bridge them while preserving root permission/result hooks. Run those in the main session.
 - UI/command-driven resumes after reopening the main session need a main-session `agent_*` tool call to establish the execution bridge; use `agent_steer` rather than the thread dialog.
 - Applies to newly started sessions (including retained ones reopened after reload). Already-open sessions keep their selected tools, and the main session's tool set is unchanged.
-- Non-default modes can expose `agent_spawn` to types that weren't meant to delegate.
+- All except blocked and All can expose `agent_spawn` to types that weren't meant to delegate.
 
 ## Max Levels (`maxLevels`)
 
