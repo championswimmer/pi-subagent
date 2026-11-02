@@ -13,6 +13,17 @@ Generated from version tags and merged GitHub pull requests. Do not edit this fi
 
 **Full Changelog**: https://github.com/championswimmer/pi-subagent-manager/compare/v0.30.0...v1.0.0
 
+### [v1.5.0](https://github.com/championswimmer/pi-subagent-manager/releases/tag/v1.5.0) — Minor release (2026-11-02)
+
+<!-- Release notes generated using configuration in .github/release.yml at v1.5.0 -->
+
+#### What's Changed
+##### Merged pull requests
+* feat: default tool filtering to all except blocked by @championswimmer in https://github.com/championswimmer/pi-subagent-manager/pull/85
+
+
+**Full Changelog**: https://github.com/championswimmer/pi-subagent-manager/compare/v1.4.1...v1.5.0
+
 ### [v1.4.0](https://github.com/championswimmer/pi-subagent-manager/releases/tag/v1.4.0) — Minor release (2026-10-31)
 
 <!-- Release notes generated using configuration in .github/release.yml at v1.4.0 -->
