@@ -6,9 +6,7 @@ thinkingLevel: low
 color: success
 modelSuggestions:
   - gpt-6-luna
-  - deepseek-v4.1-flash
-  - gemini-3.5-flash-lite
-  - gemini-3.8-flash
+  - haiku-5.5
 tools:
   allow:
     - read

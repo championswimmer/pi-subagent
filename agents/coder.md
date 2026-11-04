@@ -7,10 +7,7 @@ color: mdCode
 modelSuggestions:
   - sonnet-5.5
   - gpt-6.1-sol
-  - muse-spark-1.3
-  - mimo-v2.6-pro
-  - glm-5.3
-  - grok-4.7
+  - kimi-k3.1-pro
 tools:
   allow:
     - read
