@@ -135,15 +135,21 @@ test("researcher is non-delegating; tasker stays cheap-first", (t) => {
     "fable-5.1",
     "kimi-k3",
   ]);
-  assert.deepEqual(researcher.modelSuggestions, ["gpt-6.1-terra", "sonnet-5.5"]);
+  assert.deepEqual(researcher.modelSuggestions, ["gpt-6.1-terra", "sonnet-5.5", "muse-spark-1.3"]);
   assert.ok(store.get("writer").modelSuggestions?.includes("gemini-4-argon"));
+  assert.ok(store.get("reviewer").modelSuggestions?.includes("gemini-4-argon"));
   assert.equal(store.get("tasker").thinkingLevel, "low");
-  assert.deepEqual(store.get("tasker").modelSuggestions, ["gpt-6-luna", "haiku-5.5"]);
+  assert.deepEqual(store.get("tasker").modelSuggestions, [
+    "gpt-6-luna",
+    "haiku-5.5",
+    "deepseek-v4.1-flash-1017",
+  ]);
   assert.equal(store.get("coder").thinkingLevel, "high");
   assert.deepEqual(store.get("coder").modelSuggestions, [
     "sonnet-5.5",
     "gpt-6.1-sol",
     "kimi-k3.1-pro",
+    "muse-wonder-full-1.0",
   ]);
 });
 

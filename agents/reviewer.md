@@ -9,6 +9,7 @@ modelSuggestions:
   - sonnet-5.5
   - opus-5.5
   - glm-5.3
+  - gemini-4-argon
 tools:
   allow:
     - read

@@ -7,6 +7,7 @@ color: success
 modelSuggestions:
   - gpt-6-luna
   - haiku-5.5
+  - deepseek-v4.1-flash-1017
 tools:
   allow:
     - read
