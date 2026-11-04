@@ -128,23 +128,23 @@ test("researcher is non-delegating; tasker stays cheap-first", (t) => {
     "agent_update",
     "agent_pause",
   ]);
-  assert.equal(researcher.thinkingLevel, "high");
+  assert.equal(researcher.thinkingLevel, "medium");
   assert.deepEqual(store.get("architect").modelSuggestions, [
     "opus-5.5",
     "gpt-6-astra",
     "fable-5.1",
     "kimi-k3",
   ]);
-  assert.deepEqual(researcher.modelSuggestions, [
-    "gemini-4-argon",
-    "gpt-5.6-sol",
-    "muse-spark-1.3",
-    "sonnet-5.5",
-  ]);
+  assert.deepEqual(researcher.modelSuggestions, ["gpt-6.1-terra", "sonnet-5.5"]);
   assert.ok(store.get("writer").modelSuggestions?.includes("gemini-4-argon"));
   assert.equal(store.get("tasker").thinkingLevel, "low");
-  assert.equal(store.get("tasker").modelSuggestions?.[0], "gpt-6-luna");
-  assert.ok(!store.get("tasker").modelSuggestions?.includes("sonnet-5.5"));
+  assert.deepEqual(store.get("tasker").modelSuggestions, ["gpt-6-luna", "haiku-5.5"]);
+  assert.equal(store.get("coder").thinkingLevel, "high");
+  assert.deepEqual(store.get("coder").modelSuggestions, [
+    "sonnet-5.5",
+    "gpt-6.1-sol",
+    "kimi-k3.1-pro",
+  ]);
 });
 
 test("a missing bundled directory disables packaged defaults without dropping user agents", (t) => {
