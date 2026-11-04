@@ -8,6 +8,7 @@ modelSuggestions:
   - sonnet-5.5
   - gpt-6.1-sol
   - kimi-k3.1-pro
+  - muse-wonder-full-1.0
 tools:
   allow:
     - read

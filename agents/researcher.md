@@ -5,6 +5,7 @@ description: Evidence-backed local/remote codebase and internet research; source
 modelSuggestions:
   - gpt-6.1-terra
   - sonnet-5.5
+  - muse-spark-1.3
 thinkingLevel: medium
 color: syntaxVariable
 tools:

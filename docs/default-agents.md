@@ -43,13 +43,20 @@ Every `modelSuggestions` entry is a single plain model-name string suitable for 
 | Role       | Suggested names, in order                                                       | Rationale                                                                                                                                                            |
 | ---------- | ------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | architect  | `opus-5.5`, `gpt-6-astra`, `fable-5.1`, `kimi-k3`                               | Heavyweight, quality-first reasoning for ambiguous architecture, difficult constraints, and consequential plans; Kimi is the user-selected long-context alternative. |
-| coder      | `sonnet-5.5`, `gpt-6.1-sol`, `kimi-k3.1-pro`                                    | User-selected implementation shortlist, with high thinking by default.                                                                                               |
-| researcher | `gpt-6.1-terra`, `sonnet-5.5`                                                   | User-selected research shortlist, with medium thinking by default; no matched research-citation tournament is claimed.                                               |
-| reviewer   | `gpt-6.1-sol`, `sonnet-5.5`, `opus-5.5`, `glm-5.3`                              | Reasoning and code evidence, without treating premium Astra as necessary for every review.                                                                           |
-| tasker     | `gpt-6-luna`, `haiku-5.5`                                                       | User-selected bounded-task shortlist, with low thinking by default.                                                                                                  |
+| coder      | `sonnet-5.5`, `gpt-6.1-sol`, `kimi-k3.1-pro`, `muse-wonder-full-1.0`                                    | User-selected implementation shortlist, with high thinking by default.                                                                                               |
+| researcher | `gpt-6.1-terra`, `sonnet-5.5`, `muse-spark-1.3`                                                   | User-selected research shortlist, with medium thinking by default; no matched research-citation tournament is claimed.                                               |
+| reviewer   | `gpt-6.1-sol`, `sonnet-5.5`, `opus-5.5`, `glm-5.3`, `gemini-4-argon`                              | Reasoning and code evidence, without treating premium Astra as necessary for every review.                                                                           |
+| tasker     | `gpt-6-luna`, `haiku-5.5`, `deepseek-v4.1-flash-1017`                                                       | User-selected bounded-task shortlist, with low thinking by default.                                                                                                  |
 | writer     | `opus-5.5`, `gemini-4-argon`, `gemini-3.8-flash`, `fable-5.1`, `muse-spark-1.3` | Quality-sensitive editorial work, creative-writing Arena candidates, low-cost drafting, and a user-selected Muse alternative.                                        |
 
 These are choices, not an automatic fallback/escalation chain or a universal quality ranking. Model aliases were checked against `pi --list-models`, including `claude-haiku-5-5`, `claude-sonnet-5-5`, and `moonshotai/kimi-k3.1-pro`; fuzzy suggestions omit provider paths and normalize version separators. The historical audit is not a new benchmark evaluation of these updates. Deep-research product results are not automatically results for their underlying base models.
+
+The November 4, 2026 additions were checked against provider sources and the current catalog:
+
+- Tasker uses `deepseek-v4.1-flash-1017`, the latest V4.1 Flash weight revision. [DeepSeek](https://api-docs.deepseek.com/) serves it through `deepseek-flash`; Pi and OpenRouter also list the explicit `deepseek/deepseek-v4.1-flash-1017` identifier.
+- Coder adds `muse-wonder-full-1.0`, the exact identifier in [Meta’s Wonder model table](https://dev.meta.ai/models/muse-wonder). Full is a distinct, Muse Code subscription-only variant, not ordinary Wonder at max reasoning effort. It is an advisory suggestion and may not match a model available in Pi; it does not imply public Model API access.
+- Researcher adds `muse-spark-1.3`, [Meta’s recommended current Spark version](https://dev.meta.ai/docs/models), not the separate Spark Open model.
+- Reviewer adds `gemini-4-argon` (`google/gemini-4-argon` in the [OpenRouter catalog](https://openrouter.ai/api/v1/models)); writer already includes it. Existing suggestions and thinking defaults are preserved.
 
 ### Quality, price, and speed are different axes
 
