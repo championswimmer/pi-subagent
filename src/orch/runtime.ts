@@ -839,7 +839,9 @@ export function createDriverFactory(
     let disposed = false;
     let running = false;
     let aborted = false;
-    let baseline = session.messages.length;
+    // Compaction can replace session.messages during a prompt, invalidating any saved index.
+    const promptResult: { lastAssistant?: AssistantMessage } = {};
+    const getLastAssistant = () => promptResult.lastAssistant;
     // Subscribe after inherited/restored history is loaded; only new assistant events are counted.
     let settledInput = 0;
     let settledOutput = 0;
@@ -884,6 +886,8 @@ export function createDriverFactory(
     );
     const unsubscribe = session.subscribe((event) => {
       transcript.accept(event);
+      if (running && event.type === "message_end" && event.message.role === "assistant")
+        promptResult.lastAssistant = event.message;
       if (event.type === "tool_execution_start")
         emit("activity", `Tool: ${event.toolName}`, toolArgumentSnippet(event.args));
       if (event.type === "tool_execution_end")
@@ -944,17 +948,14 @@ export function createDriverFactory(
         if (running) throw new Error("Subagent is already running; use steer instead");
         running = true;
         aborted = false;
-        baseline = session.messages.length;
+        promptResult.lastAssistant = undefined;
         finalOutput = "";
         try {
           await enforceScopedModelPolicy();
           await resumePending();
           await session.prompt(message, { expandPromptTemplates: false });
           await session.waitForIdle();
-          const last = session.messages
-            .slice(baseline)
-            .filter((msg) => msg.role === "assistant")
-            .at(-1);
+          const last = getLastAssistant();
           if (aborted || last?.stopReason === "aborted") throw new Error("Subagent run aborted");
           if (last?.stopReason === "error")
             throw new Error(last.errorMessage || "Subagent model failed");

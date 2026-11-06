@@ -1197,6 +1197,31 @@ test("isolated real SDK driver without credentials", async (t) => {
       },
     );
 
+    await t.test("returns the final answer after inherited history is compacted", async () => {
+      const inherited = Array.from({ length: 200 }, (_, index) => ({
+        role: "user" as const,
+        content: [{ type: "text" as const, text: `Inherited ${index}: ${"history ".repeat(200)}` }],
+        timestamp: Date.now(),
+      }));
+      const driver = await create(options({ path: "/root/compacted-output", inherited }));
+      const baseline = driver.snapshot().length;
+      next = {
+        ...answer("Final answer after compaction"),
+        usage: { ...answer("").usage, input: 90000, totalTokens: 90001 },
+      };
+      try {
+        await driver.prompt("Review the inherited history");
+      } finally {
+        next = answer("child answer");
+      }
+      const snapshot = driver.snapshot();
+      const session = SessionManager.open(driver.sessionFile!);
+      assert.ok(session.getBranch().some((entry) => entry.type === "compaction"));
+      assert.ok(snapshot.length < baseline, "compaction replaced the inherited context");
+      assert.equal(countMessages(snapshot, "assistant", "Final answer after compaction"), 1);
+      assert.equal(driver.output(), "Final answer after compaction");
+    });
+
     await t.test("pause settles after tools, then dispose/reopen same JSONL resumes", async () => {
       pause = false;
       const { tool, started, release } = gatedTool("agent_pause", () => {
