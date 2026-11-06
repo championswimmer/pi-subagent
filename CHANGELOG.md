@@ -13,6 +13,18 @@ Generated from version tags and merged GitHub pull requests. Do not edit this fi
 
 **Full Changelog**: https://github.com/championswimmer/pi-subagent-manager/compare/v0.30.0...v1.0.0
 
+### [v1.7.0](https://github.com/championswimmer/pi-subagent-manager/releases/tag/v1.7.0) — Minor release (2026-11-06)
+
+<!-- Release notes generated using configuration in .github/release.yml at v1.7.0 -->
+
+#### What's Changed
+##### Merged pull requests
+* fix: treat empty scoped model list as unrestricted by @championswimmer in https://github.com/championswimmer/pi-subagent-manager/pull/89
+* fix: retain subagent output after context compaction by @championswimmer in https://github.com/championswimmer/pi-subagent-manager/pull/90
+
+
+**Full Changelog**: https://github.com/championswimmer/pi-subagent-manager/compare/v1.6.1...v1.7.0
+
 ### [v1.6.0](https://github.com/championswimmer/pi-subagent-manager/releases/tag/v1.6.0) — Minor release (2026-11-04)
 
 <!-- Release notes generated using configuration in .github/release.yml at v1.6.0 -->
