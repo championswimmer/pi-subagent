@@ -752,7 +752,19 @@ test("isolated real SDK driver without credentials", async (t) => {
           );
           await assertSpawnMatches(preferred);
           setScopedModels();
-          assert.throws(() => factory.resolveAgentSettings(preferred, "/root"), /scoped-models/);
+          assert.equal(
+            factory.resolveAgentSettings(preferred, "/root").model,
+            "runtime-other/backup",
+          );
+          await assertSpawnMatches(preferred);
+          assert.throws(
+            () => factory.resolveAgentSettings({ ...plain, models: ["missing/model"] }, "/root"),
+            (error: unknown) => {
+              assert.match(String(error), /available models/i);
+              assert.doesNotMatch(String(error), /\/scoped-models/);
+              return true;
+            },
+          );
           modelSelection = "pick-first-available";
           const parent = await assertSpawnMatches(preferred);
           assert.deepEqual(factory.resolveAgentSettings(plain, parent), {
@@ -1306,7 +1318,7 @@ test("isolated real SDK driver without credentials", async (t) => {
         await new Promise((resolve) => setImmediate(resolve));
         await driver.steer("queued after acceptance");
         const sessionFile = driver.sessionFile!;
-        setScopedModels();
+        setScopedModels("runtime-other/backup");
         releaseDone();
         await run;
         beforeDone = undefined;
@@ -1386,7 +1398,7 @@ test("isolated real SDK driver without credentials", async (t) => {
       "explicit scoped preferences are ordered, fail closed, and cached drivers reselect after scope changes",
       async () => {
         const baselineCalls = calls;
-        setScopedModels();
+        setScopedModels("runtime-other/backup");
         await assert.rejects(
           create(
             options({
@@ -1402,7 +1414,6 @@ test("isolated real SDK driver without credentials", async (t) => {
             assert.match(String(error), /empty-scope/);
             assert.match(String(error), /runtime-test\/model\/with\/slashes/);
             assert.match(String(error), /\/scoped-models/);
-            assert.match(String(error), /\[\]/);
             return true;
           },
         );
@@ -1442,14 +1453,23 @@ test("isolated real SDK driver without credentials", async (t) => {
         assertModel("runtime-other/backup");
 
         setScopedModels();
+        next = answer("unrestricted scope");
+        await cached.prompt("scope unrestricted");
+        assertModel("runtime-other/backup");
+
+        setScopedModels("runtime-test/fallback");
         const rejectedCalls = calls;
-        await assert.rejects(cached.prompt("scope lost"), /\/scoped-models/);
+        await assert.rejects(cached.prompt("no preferred model in scope"), /\/scoped-models/);
         assert.equal(calls, rejectedCalls);
 
         setScopedModels("runtime-test/model/with/slashes");
         next = answer("cached switched");
         await cached.prompt("scope regained");
         assertModel("runtime-test/model/with/slashes");
+        setScopedModels();
+        next = answer("scope unrestricted again");
+        await cached.prompt("prefer first available again");
+        assertModel("runtime-other/backup");
       },
     );
 

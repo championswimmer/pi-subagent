@@ -36,12 +36,7 @@ import type {
   SubagentExtensionSelection,
   ToolFilteringMode,
 } from "../prefs/settings.ts";
-import {
-  modelIdentity,
-  getModelPreferences,
-  selectPreferredModel,
-  ModelPreferenceError,
-} from "../prefs/models.ts";
+import { modelIdentity, getModelPreferences, selectPreferredModel } from "../prefs/models.ts";
 import {
   THINKING_LEVELS,
   type AgentType,
@@ -219,27 +214,18 @@ export function createDriverFactory(
     const available = new Set(availableModelCandidates().map(({ model }) => modelIdentity(model)));
     return scopedModels.filter(({ model }) => available.has(modelIdentity(model)));
   };
+  // Pi represents an unrestricted scope with an empty array.
   const selectTypeModelPreference = (
     type: AgentType,
-    candidates: readonly { model: { provider: string; id: string } }[],
+    scopedModels: readonly ScopedModel[],
     filtering: boolean,
   ) => {
-    try {
-      return selectPreferredModel(type, candidates, filtering);
-    } catch (error) {
-      if (
-        filtering &&
-        candidates.length === 0 &&
-        error instanceof Error &&
-        !error.message.includes("[]")
-      ) {
-        const message = `${error.message} Current /scoped-models scope: [].`;
-        throw error instanceof ModelPreferenceError
-          ? new ModelPreferenceError(message, error.scopedModelFiltering)
-          : new Error(message);
-      }
-      throw error;
-    }
+    const restricted = filtering && scopedModels.length > 0;
+    return selectPreferredModel(
+      type,
+      restricted ? availableScopedModels(scopedModels) : availableModelCandidates(),
+      restricted,
+    );
   };
   // Discovery and new/restored drivers share model selection and thinking inheritance.
   const resolveInitialSettings = (
@@ -260,11 +246,8 @@ export function createDriverFactory(
       id = ctx.model?.id;
     } else if (preferences !== undefined) {
       const filtering = mode === "pick-first-scoped";
-      const candidates = filtering
-        ? availableScopedModels(normalizeScopedModels(ctx.scopedModels))
-        : availableModelCandidates();
       ({ provider, id } = parseModelIdentity(
-        selectTypeModelPreference(type, candidates, filtering)!,
+        selectTypeModelPreference(type, normalizeScopedModels(ctx.scopedModels), filtering)!,
       ));
     } else if (restored?.model) {
       provider = restored.model.provider;
@@ -372,9 +355,9 @@ export function createDriverFactory(
       modelSelection === "use-current" ? undefined : getModelPreferences(options.type);
     const filteringEnabled = () => getModelSelection() === "pick-first-scoped";
     const selectModelPreference = (
-      candidates: readonly { model: { provider: string; id: string } }[],
+      scopedModels: readonly ScopedModel[],
       filtering = filteringEnabled(),
-    ) => selectTypeModelPreference(options.type, candidates, filtering);
+    ) => selectTypeModelPreference(options.type, scopedModels, filtering);
     const initialScopedModels = normalizeScopedModels(ctx.scopedModels);
     const { provider, id, thinkingLevel } = resolveInitialSettings(
       options.type,
@@ -721,10 +704,7 @@ export function createDriverFactory(
       liveScopedModels: readonly ScopedModel[],
     ) => {
       if (!filteringEnabled() || modelPreferences === undefined) return;
-      const preferredIdentity = selectModelPreference(
-        availableScopedModels(liveScopedModels),
-        true,
-      );
+      const preferredIdentity = selectModelPreference(liveScopedModels, true);
       if (!preferredIdentity) return;
       if (!currentIdentity) throw new Error(`Subagent ${options.path} has no selected model`);
       if (currentIdentity !== preferredIdentity) {
@@ -751,10 +731,7 @@ export function createDriverFactory(
         updateResolved();
         return;
       }
-      const preferredIdentity = selectModelPreference(
-        availableScopedModels(liveScopedModels),
-        true,
-      );
+      const preferredIdentity = selectModelPreference(liveScopedModels, true);
       if (!preferredIdentity) {
         updateResolved();
         return;

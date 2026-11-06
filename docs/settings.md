@@ -189,7 +189,7 @@ Which model an agent gets when its session starts.
 
 - Types with no `models` inherit the parent's model in both Pick First modes.
 - Your list's order decides, not the scoped list's order.
-- No match → spawn fails clearly. An empty `/scoped-models` matches nothing.
+- No match → spawn fails clearly. An empty `/scoped-models` means unrestricted: all available models are eligible.
 - `use-current` always uses the **main** session's model, even for nested or reopened agents. Thinking levels stay per-agent.
 - `modelSuggestions` never affects this.
 - Switching modes doesn't change already-open sessions.

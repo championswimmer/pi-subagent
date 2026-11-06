@@ -295,7 +295,7 @@ test("ordered model editor warns and annotates portable preferences when scope i
   }).component;
   assert.match(
     picker.render(200).join("\n"),
-    /No scoped models: Pick First \(scoped\) cannot run explicit preferences\. Configure \/scoped-models or change Model Picking\./,
+    /No scope restriction: Pick First \(scoped\) uses all available models\./,
   );
   assert.match(
     picker.getCurrentItems().find((item) => item.value === "openai/gpt-4.1")?.description ?? "",
@@ -308,7 +308,7 @@ test("ordered model editor warns and annotates portable preferences when scope i
   }).component;
   assert.match(
     menu.render(200).join("\n"),
-    /No scoped models: Pick First \(scoped\) cannot run explicit preferences\. Configure \/scoped-models or change Model Picking\./,
+    /No scope restriction: Pick First \(scoped\) uses all available models\./,
   );
   assert.match(
     menu.getCurrentItems().find((item) => item.value === "openai/gpt-4.1")?.description ?? "",

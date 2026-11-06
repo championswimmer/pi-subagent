@@ -408,7 +408,7 @@ const MODEL_SELECTION_OPTIONS = [
     id: "pick-first-scoped",
     label: "Pick First (scoped)",
     value: "First available preference in the session scope",
-    help: "Pick First (scoped):\nPick the first available model in the agent's models list that is also selected in the current session's /scoped-models.\nSkip unavailable models and providers without credentials.",
+    help: "Pick First (scoped):\nPick the first available model in the agent's models list that is also selected in the current session's /scoped-models. An empty scope allows all available models.\nSkip unavailable models and providers without credentials.",
   },
   {
     id: "use-current",
@@ -419,7 +419,7 @@ const MODEL_SELECTION_OPTIONS = [
 ] as const;
 
 const MODEL_SELECTION_HELP =
-  "Pick First (available): first preference with an enabled, authenticated provider in Pi.\nPick First (scoped): same, limited to the current session's /scoped-models.\nUse Current: ignore models and use the main session's current model; keep the agent's thinking level.\nOnly the models list affects runtime picking; modelSuggestions are search hints.\nSave and apply to affect agents when their sessions start.";
+  "Pick First (available): first preference with an enabled, authenticated provider in Pi.\nPick First (scoped): same, limited to the current session's /scoped-models when non-empty.\nUse Current: ignore models and use the main session's current model; keep the agent's thinking level.\nOnly the models list affects runtime picking; modelSuggestions are search hints.\nSave and apply to affect agents when their sessions start.";
 
 export async function configureAgents(
   ctx: ExtensionCommandContext,
