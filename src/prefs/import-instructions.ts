@@ -23,8 +23,9 @@ edit. Only these frontmatter keys are accepted:
 - name: required safe ID matching /^[a-zA-Z0-9][a-zA-Z0-9_-]*$/.
 - description: required nonempty routing description (what work this agent is for).
 - models: optional NONEMPTY ordered YAML array of exact provider/model-id identities.
-  First preference present in the CURRENT /scoped-models list wins. Matching is verbatim,
-  not fuzzy. None matching (including empty scope) FAILS; there is no provider fallback.
+  First available preference in the CURRENT /scoped-models list wins. An empty scope is
+  unrestricted, so any available model is eligible. Matching is verbatim, not fuzzy.
+  None matching fails; there is no provider fallback.
   Models with API pi-virtual cannot run as target children, even if scoped. Check the supplied
   model API metadata; never pin a virtual model or inherit a pi-virtual parent. Ask for approval
   to choose a physical scoped model instead, otherwise skip the definition. Do not silently
