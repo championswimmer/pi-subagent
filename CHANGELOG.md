@@ -25,6 +25,17 @@ Generated from version tags and merged GitHub pull requests. Do not edit this fi
 
 **Full Changelog**: https://github.com/championswimmer/pi-subagent-manager/compare/v1.6.1...v1.7.0
 
+#### [v1.7.1](https://github.com/championswimmer/pi-subagent-manager/releases/tag/v1.7.1) — Patch release (2026-11-13)
+
+<!-- Release notes generated using configuration in .github/release.yml at v1.7.1 -->
+
+##### What's Changed
+###### Merged pull requests
+* feat: promote footer and loader settings out of labs by @championswimmer in https://github.com/championswimmer/pi-subagent-manager/pull/92
+
+
+**Full Changelog**: https://github.com/championswimmer/pi-subagent-manager/compare/v1.7.0...v1.7.1
+
 ### [v1.6.0](https://github.com/championswimmer/pi-subagent-manager/releases/tag/v1.6.0) — Minor release (2026-11-04)
 
 <!-- Release notes generated using configuration in .github/release.yml at v1.6.0 -->
