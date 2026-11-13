@@ -10,7 +10,7 @@ The shared status key / event Widget ID is exactly **`subagent_cost`**. It is no
 
 ## Extension Status (recommended; default)
 
-1. Open `/agents settings` → **[labs] Footer display** → **Location**, choose
+1. Open `/agents settings` → **Footer display** → **Location**, choose
    **pi-footer status widget**, return to settings, and save with **Ctrl+S**.
 2. Open `/footer`, choose **Edit lines**, select a row, and add **Extension Status**.
 3. Set **Status key** to **`subagent_cost`** and enable **Raw value only**.
@@ -53,7 +53,7 @@ It clears the status with `ctx.ui.setStatus("subagent_cost", undefined)`.
 
 ## Pi Event Value (alternative)
 
-1. Open `/agents settings` → **[labs] Footer display** → **Location**, choose
+1. Open `/agents settings` → **Footer display** → **Location**, choose
    **pi-footer event**, return to settings, and save with **Ctrl+S**.
 2. In `/footer`, add a **Pi Event Value** widget to the desired row.
 3. Enter **Widget ID** as **`subagent_cost`** manually, replacing the generated ID,

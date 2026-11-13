@@ -259,7 +259,7 @@ async function configureFooterDisplay(
   while (true) {
     const action = await dialogMenu(
       ctx,
-      "[lab] Footer display",
+      "Footer display",
       (
         [
           {
@@ -537,9 +537,16 @@ async function configureAgentsDialog(
           },
           {
             id: "costDisplay",
-            label: "[lab] Footer display",
+            label: "Footer display",
             value: COST_DISPLAY_OPTIONS.find((mode) => mode.id === draft.costDisplay)!.label,
             help: "Configure footer location, displayed cost, and money icon in a submenu. Save and apply to update immediately.",
+          },
+          {
+            id: "loaderStyle",
+            label: "Loader style",
+            value:
+              AGENT_LOADERS[effectiveLoaderStyle(draft.loaderStyle, draft.nerdFontIcons)].label,
+            help: "Preview every animation frame and settled state.\nNerd Fonts Off: Braille (standard Unicode), ASCII, ASCII Star and ASCII Pulse. On: all palettes, including Circle and Hourglass.\nNerd-only saved styles fall back to ASCII while Nerd Fonts are off. Save and apply to update immediately.",
           },
           {
             id: "housekeeping",
@@ -556,13 +563,6 @@ async function configureAgentsDialog(
             label: "[lab] Nerd Font icons",
             value: draft.nerdFontIcons ? "On" : "Off",
             help: "Experimental: display each agent type’s optional Nerd Font icon and unlock Nerd Font loader palettes.\nRequires a Nerd Font configured in your terminal; otherwise glyphs may appear as boxes.\nOff by default. Braille and ASCII loaders work with this Off. Save and apply to update immediately.",
-          },
-          {
-            id: "loaderStyle",
-            label: "[lab] Loader style",
-            value:
-              AGENT_LOADERS[effectiveLoaderStyle(draft.loaderStyle, draft.nerdFontIcons)].label,
-            help: "Preview every animation frame and settled state.\nNerd Fonts Off: Braille (standard Unicode), ASCII, ASCII Star and ASCII Pulse. On: all palettes, including Circle and Hourglass.\nNerd-only saved styles fall back to ASCII while Nerd Fonts are off. Save and apply to update immediately.",
           },
           {
             id: "subagentExtensions",
@@ -679,7 +679,7 @@ async function configureAgentsDialog(
         const styles = availableLoaderStyles(draft.nerdFontIcons);
         const style = await dialogMenu(
           ctx,
-          "[lab] Loader style",
+          "Loader style",
           LOADER_OPTIONS.filter((option) => styles.includes(option.id)),
           { selectedId: effectiveLoaderStyle(draft.loaderStyle, draft.nerdFontIcons) },
         );
