@@ -142,7 +142,7 @@ async function run(
   };
 }
 
-test("[lab] Loader style previews all families and states together, and saves every selection", async (t) => {
+test("Loader style previews all families and states together, and saves every selection", async (t) => {
   for (const loaderStyle of LOADER_STYLES) {
     const result = await run(t, ["loaderStyle", loaderStyle, "save"], {
       settings: { ...DEFAULT_MANAGER_SETTINGS, nerdFontIcons: true },
@@ -150,15 +150,15 @@ test("[lab] Loader style previews all families and states together, and saves ev
     const chooser = result.menus[1]!;
     assert.equal(
       result.menus[0]!.rows.find((row) => row.id === "loaderStyle")!.label,
-      "[lab] Loader style",
+      "Loader style",
     );
     assert.equal(result.value(0, "loaderStyle"), "Circle");
-    assert.equal(chooser.title, "[lab] Loader style");
+    assert.equal(chooser.title, "Loader style");
     assert.deepEqual(
       chooser.rows.map((row) => row.id),
       [...LOADER_STYLES],
     );
-    const preview = result.renders.find((lines) => lines[0]?.includes("[lab] Loader style"))!;
+    const preview = result.renders.find((lines) => lines[0]?.includes("Loader style"))!;
     assert.ok(preview, "loader picker rendered");
     const text = stripTerminalSequences(preview.join("\n"));
     for (const row of chooser.rows) {
@@ -179,7 +179,7 @@ test("[lab] Loader style previews all families and states together, and saves ev
   }
 });
 
-test("[lab] Loader style cancel, restore-defaults and narrow layouts preserve draft semantics", async (t) => {
+test("Loader style cancel, restore-defaults and narrow layouts preserve draft semantics", async (t) => {
   const cancelled = await run(t, ["loaderStyle", "braille", "cancel"]);
   assert.equal(cancelled.applied, 0);
   assert.equal(existsSync(cancelled.userFile), false);
@@ -210,14 +210,12 @@ test("lab labels remain in the name column with saved dots between name and valu
     global: { nerdFontIcons: true },
     project: { nerdFontIcons: false },
   });
-  for (const id of [
-    "costDisplay",
-    "nerdFontIcons",
-    "loaderStyle",
-    "subagentExtensions",
-    "checklistIntegration",
-    "finalRecap",
-  ]) {
+  const ids = result.menus[0]!.rows.map((row) => row.id);
+  for (const id of ["costDisplay", "loaderStyle"]) {
+    assert.ok(ids.indexOf(id) < ids.indexOf("housekeeping"), `${id} precedes lab settings`);
+    assert.doesNotMatch(result.menus[0]!.rows.find((row) => row.id === id)!.label, /^\[lab\]/);
+  }
+  for (const id of ["nerdFontIcons", "subagentExtensions", "checklistIntegration", "finalRecap"]) {
     const row = result.menus[0]!.rows.find((row) => row.id === id)!;
     assert.match(row.label, /^\[lab\] /);
     assert.equal(row.renderLabel, undefined, "lab label is not stripped by a formatter");
@@ -930,7 +928,7 @@ test("Footer aggregate provenance covers all three settings while the submenu ma
   );
   assert.equal(
     result.menus[0]!.rows.find((row) => row.id === "costDisplay")!.label,
-    "[lab] Footer display",
+    "Footer display",
   );
   assert.equal(savedIndicators(result.menus[1]!, "location"), "<accent>●</accent>  ");
   assert.equal(savedIndicators(result.menus[1]!, "value"), "<accent>●</accent>  ");
@@ -1043,10 +1041,7 @@ test("Tool Filtering saves to a trusted project and restores defaults without sa
   });
   assert.equal(saved.applied, 1);
   assert.equal(saved.loaded.settings.toolFiltering, "allowed");
-  assert.equal(
-    JSON.parse(readFileSync(saved.projectFile, "utf8")).toolFiltering,
-    "allowed",
-  );
+  assert.equal(JSON.parse(readFileSync(saved.projectFile, "utf8")).toolFiltering, "allowed");
   assert.equal(existsSync(saved.userFile), false);
 
   const restored = await run(t, ["toolFiltering", "all", "defaults", "user", "cancel"]);
@@ -1195,9 +1190,9 @@ test("Footer display opens a submenu and saves all three locations with integrat
     const result = await run(t, ["costDisplay", "location", mode, "back", "save"]);
     assert.equal(
       result.menus[0]!.rows.find((row) => row.id === "costDisplay")!.label,
-      "[lab] Footer display",
+      "Footer display",
     );
-    assert.equal(result.menus[1]!.title, "[lab] Footer display");
+    assert.equal(result.menus[1]!.title, "Footer display");
     assert.deepEqual(
       result.menus[1]!.rows.map((row) => row.id),
       ["location", "value", "icon", "back"],

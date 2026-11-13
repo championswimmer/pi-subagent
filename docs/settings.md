@@ -65,13 +65,13 @@ Minimal mode groups starting agents with running agents and excludes the main co
 
 ## [labs] Nerd Font icons (`nerdFontIcons`)
 
-Experimental features are tagged **[labs]** in the selected setting's help. Row labels omit that prefix to leave room for provenance dots. **[labs] Nerd Font icons** is an on/off toggle, **off by default**. Enable it in `/agents` and save with **Ctrl+S**, or set `"nerdFontIcons": true` in your settings file. Configure a [Nerd Font](https://www.nerdfonts.com/) in your terminal first; unsupported fonts may show boxes or incorrect glyphs. The extension does not install or detect fonts.
+Experimental settings are tagged **[lab]** in their row labels. **[labs] Nerd Font icons** is an on/off toggle, **off by default**. Enable it in `/agents` and save with **Ctrl+S**, or set `"nerdFontIcons": true` in your settings file. Configure a [Nerd Font](https://www.nerdfonts.com/) in your terminal first; unsupported fonts may show boxes or incorrect glyphs. The extension does not install or detect fonts.
 
 When enabled, an agent type’s optional `icon` appears before its readable name in the full widget, thread browsers, live watcher header, and type picker. Starting/running agents show the selected loader **before the original role icon**, never replacing it. Completed, paused, failed, and stopped agents show that loader family's corresponding static state icon before the role icon. Agents without a configured role icon still show their loader/state indicator. The one-line minimal widget uses the same family's indicators for aggregate status counts. Turning the setting off hides role icons without removing configured icons; portable loaders remain visible; RPC output keeps state indicators static. Saved settings apply immediately to newly rendered widgets and dialogs.
 
 All six bundled agents have [role-specific icons](default-agents.md#nerd-font-icons). Add or change an icon with **[labs] Icon** in `/agents types`, or the optional `icon` frontmatter field in [your own agent](custom-agents.md#icons-labs). Retained threads keep the icon from their saved agent definition.
 
-## [labs] Loader style (`loaderStyle`)
+## Loader style (`loaderStyle`)
 
 Choose a loader in `/agents` settings and save with **Ctrl+S**, or set `loaderStyle` in your settings file:
 
@@ -86,11 +86,11 @@ Choose a loader in `/agents` settings and save with **Ctrl+S**, or set `loaderSt
 
 With **[labs] Nerd Font icons** off, the picker shows only Braille and ASCII palettes. With it on, all palettes are available. Saved Circle/Hourglass preferences render as ASCII while Nerd Fonts are off, without changing the saved preference. ASCII palettes use `+`, `=`, `!`, and `#` for completed, paused, failed, and stopped states. The compact ASCII animations are inspired by [cli-spinners](https://github.com/sindresorhus/cli-spinners/blob/main/spinners.json) (`line`, `star2`, and `toggle13`).
 
-The Labs preview shows every family's running animation frames and completed, paused, failed, and stopped icons, so you can compare all states before choosing. Starting uses the running animation. State indicators precede the role icon when role icons are enabled; the selected family also applies to the minimal widget's counts. In non-animated output, active agents use the family's first frame.
+The loader picker shows each available family's running animation frames and completed, paused, failed, and stopped icons, so you can compare all states before choosing. Starting uses the running animation. State indicators precede the role icon when role icons are enabled; the selected family also applies to the minimal widget's counts. In non-animated output, active agents use the family's first frame.
 
-## [labs] Cost display (`costDisplay`)
+## Cost display (`costDisplay`)
 
-Open **[labs] Footer display** in `/agents settings` to choose the location, display value, and icon, then return and save. The stable ID/key is **`subagent_cost`**.
+Open **Footer display** in `/agents settings` to choose the location, display value, and icon, then return and save. The stable ID/key is **`subagent_cost`**.
 
 | Value | Output |
 | --- | --- |
