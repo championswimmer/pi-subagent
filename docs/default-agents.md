@@ -9,15 +9,15 @@ The original model shortlist was audited **October 4, 2026 local time (October 3
 | Role         | Work and boundaries                                                                                                                                  | Thinking |
 | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
 | `architect`  | Design, ambiguity, tradeoffs, verifiable plans, and explicitly authorized coordination. Not an implementation mandate or an unlimited research job.  | `high`   |
-| `coder`      | Iterative implementation, refactoring, debugging, and frontend UI through a checked patch. Not lookup-only work or independent review.               | `high`   |
+| `coder`      | Complex or sustained implementation, refactoring, debugging, and frontend UI through a checked patch.                                                | `high`   |
 | `researcher` | Source-backed local/remote codebase, library/API, and internet research; verification and synthesis. No implementation edits or delegation.          | `medium` |
 | `reviewer`   | Scoped, non-mutating correctness/security review with demonstrable defects and minimal local repair suggestions. No implementation or comment quota. | `high`   |
-| `tasker`     | Short bounded diagnostics, extraction, mechanical changes, and targeted repository lookup. Escalate ambiguity or sustained implementation.           | `low`    |
+| `tasker`     | Bounded coding, scripts, SQL/database queries, git housekeeping, diagnostics, and lookups. Escalate complex or sustained implementation.             | `low`    |
 | `writer`     | Original or revised prose for a stated audience and voice, using supplied/local evidence. No invented facts or live evidence gathering.              | `medium` |
 
 Use tasker for one symbol or a few facts already in the repository; use researcher for tracing behavior across a codebase, versioned API evidence, outside sources, or contradictory claims. Researcher gathers what is true; architect decides what to build. Writer turns verified material into prose.
 
-Existing user/project `researcher` overrides still win over the new packaged default. Bundled `worker`, `explorer`, and `designer` remain absent: bounded work routes to tasker, frontend implementation to coder, and source investigation to researcher. Nothing is automatically renamed.
+Existing user/project `researcher` overrides still win over the new packaged default. Bundled `worker`, `explorer`, and `designer` remain absent: bounded work routes to tasker, complex or sustained implementation to coder, and source investigation to researcher. Nothing is automatically renamed.
 
 ## Nerd Font icons
 
@@ -43,10 +43,10 @@ Every `modelSuggestions` entry is a single plain model-name string suitable for 
 | Role       | Suggested names, in order                                                       | Rationale                                                                                                                                                            |
 | ---------- | ------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | architect  | `opus-5.5`, `gpt-6-astra`, `fable-5.1`, `kimi-k3`                               | Heavyweight, quality-first reasoning for ambiguous architecture, difficult constraints, and consequential plans; Kimi is the user-selected long-context alternative. |
-| coder      | `sonnet-5.5`, `gpt-6.1-sol`, `kimi-k3.1-pro`, `muse-wonder-full-1.0`                                    | User-selected implementation shortlist, with high thinking by default.                                                                                               |
-| researcher | `gpt-6.1-terra`, `sonnet-5.5`, `muse-spark-1.3`                                                   | User-selected research shortlist, with medium thinking by default; no matched research-citation tournament is claimed.                                               |
-| reviewer   | `gpt-6.1-sol`, `sonnet-5.5`, `opus-5.5`, `glm-5.3`, `gemini-4-argon`                              | Reasoning and code evidence, without treating premium Astra as necessary for every review.                                                                           |
-| tasker     | `gpt-6-luna`, `haiku-5.5`, `deepseek-v4.1-flash-1017`                                                       | User-selected bounded-task shortlist, with low thinking by default.                                                                                                  |
+| coder      | `sonnet-5.5`, `gpt-6.1-sol`, `kimi-k3.1-pro`, `muse-wonder-full-1.0`            | User-selected implementation shortlist, with high thinking by default.                                                                                               |
+| researcher | `gpt-6.1-terra`, `sonnet-5.5`, `muse-spark-1.3`                                 | User-selected research shortlist, with medium thinking by default; no matched research-citation tournament is claimed.                                               |
+| reviewer   | `gpt-6.1-sol`, `sonnet-5.5`, `opus-5.5`, `glm-5.3`, `gemini-4-argon`            | Reasoning and code evidence, without treating premium Astra as necessary for every review.                                                                           |
+| tasker     | `gpt-6-luna`, `haiku-5.5`, `deepseek-v4.1-flash-1017`                           | User-selected bounded-task shortlist, with low thinking by default.                                                                                                  |
 | writer     | `opus-5.5`, `gemini-4-argon`, `gemini-3.8-flash`, `fable-5.1`, `muse-spark-1.3` | Quality-sensitive editorial work, creative-writing Arena candidates, low-cost drafting, and a user-selected Muse alternative.                                        |
 
 These are choices, not an automatic fallback/escalation chain or a universal quality ranking. Model aliases were checked against `pi --list-models`, including `claude-haiku-5-5`, `claude-sonnet-5-5`, and `moonshotai/kimi-k3.1-pro`; fuzzy suggestions omit provider paths and normalize version separators. The historical audit is not a new benchmark evaluation of these updates. Deep-research product results are not automatically results for their underlying base models.
