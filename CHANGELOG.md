@@ -13,6 +13,17 @@ Generated from version tags and merged GitHub pull requests. Do not edit this fi
 
 **Full Changelog**: https://github.com/championswimmer/pi-subagent-manager/compare/v0.30.0...v1.0.0
 
+### [v1.8.0](https://github.com/championswimmer/pi-subagent-manager/releases/tag/v1.8.0) — Minor release (2026-11-14)
+
+<!-- Release notes generated using configuration in .github/release.yml at v1.8.0 -->
+
+#### What's Changed
+##### Merged pull requests
+* feat: route bounded coding and routine ops to tasker by @championswimmer in https://github.com/championswimmer/pi-subagent-manager/pull/93
+
+
+**Full Changelog**: https://github.com/championswimmer/pi-subagent-manager/compare/v1.7.1...v1.8.0
+
 ### [v1.7.0](https://github.com/championswimmer/pi-subagent-manager/releases/tag/v1.7.0) — Minor release (2026-11-06)
 
 <!-- Release notes generated using configuration in .github/release.yml at v1.7.0 -->
