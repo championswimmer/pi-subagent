@@ -153,6 +153,17 @@ test("researcher is non-delegating; tasker stays cheap-first", (t) => {
   ]);
 });
 
+test("bundled routing distinguishes bounded tasks from complex implementation", (t) => {
+  const store = new ConfigStore(fixture(t));
+  const tasker = store.get("tasker");
+  for (const term of [/coding/i, /script/i, /SQL/i, /database/i, /git/i]) {
+    assert.match(tasker.description, term);
+    assert.match(tasker.systemPrompt, term);
+  }
+  assert.match(store.get("coder").description, /complex or long-running/i);
+  assert.match(store.get("architect").systemPrompt, /bounded coding.*tasker/i);
+});
+
 test("a missing bundled directory disables packaged defaults without dropping user agents", (t) => {
   const options = fixture(t);
   const custom = new ConfigStore(options).save(

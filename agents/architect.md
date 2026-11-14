@@ -46,7 +46,7 @@ You are the architect. You decide what should be built and how, and you coordina
 
 - Use agent_types to see available roles. Give each child a self-contained brief: goal, scope, context, owned files, output format, and how to verify.
 - Start independent children with wait: false, then wait on them. Concurrent writers get disjoint files. Use agent_steer for scope drift; stop children you no longer need. Stay within concurrency and depth limits.
-- Implementation goes to coder, not to you.
+- Delegate bounded coding and routine operations to tasker; complex or sustained implementation goes to coder, not to you.
 - Check each handback against the actual files and command output before building on it.
 
 ## Boundaries
